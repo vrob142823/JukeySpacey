@@ -14,7 +14,7 @@ PLAYER_HEIGHT = 60
 
 PLAYER_VEL = 5
 STAR_WIDTH = 10
-STAR_HEIGHT = 15
+STAR_HEIGHT = 20
 
 FONT = pygame.font.SysFont("comicsans", 30)
 
@@ -39,7 +39,8 @@ def main():
     star_add_increment = 2000
     star_count = 0
 
-    star = []
+    stars = []
+    hit = False
 
     while run:
         star_count += clock.tick(60)
@@ -65,7 +66,16 @@ def main():
         if keys[pygame.K_RIGHT] and player.x + PLAYER_VEL + player.width <= WIDTH:
             player.x += PLAYER_VEL
 
-        draw(player, elapsed_time)
+        for star in stars[:]:
+            star.y += STAR_VEL
+            if star.y > HEIGHT:
+                stars.remove(star)
+            elif star.y + star.height >= player.y and star.colliderect(player):
+                stars.remove(star)
+                hit = True
+                break
+
+        draw(player, elapsed_time, stars)
 
     pygame.quit()
 
