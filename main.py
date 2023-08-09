@@ -15,10 +15,11 @@ PLAYER_HEIGHT = 60
 PLAYER_VEL = 5
 STAR_WIDTH = 10
 STAR_HEIGHT = 20
+STAR_VEL = 5
 
 FONT = pygame.font.SysFont("comicsans", 30)
 
-def draw(player, elapsed_time): #add background image to the window
+def draw(player, elapsed_time, stars): #add background image to the window
     WIN.blit(BG, (0, 0))
 
     time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "white")
