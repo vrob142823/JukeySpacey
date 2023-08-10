@@ -19,18 +19,24 @@ STAR_VEL = 5
 
 FONT = pygame.font.SysFont("comicsans", 30)
 
-def draw(player, elapsed_time, stars): #add background image to the window
+def draw(player, elapsed_time, stars, score): #add background image to the window
     WIN.blit(BG, (0, 0))
 
     time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "white")
+    score_text = FONT.render(f"Score: {score}", 1, "white")
     WIN.blit(time_text, (10, 10))
+    WIN.blit(score_text, (WIDTH - 130, 10)) # Display score at the top-right corner
 
     pygame.draw.rect(WIN, "white", player)
+
+    for star in stars:
+        pygame.draw.rect(WIN, (255, 255, 255), star) # Drawing stars in white color
 
     pygame.display.update()
 
 def main():
     run = True
+    score = 0
 
     player = pygame.Rect(200, HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT)
     clock = pygame.time.Clock()
@@ -76,7 +82,9 @@ def main():
                 hit = True
                 break
 
-        draw(player, elapsed_time, stars)
+        STAR_VEL = 5 + int(elapsed_time // 30)
+
+        draw(player, elapsed_time, stars, score)
 
     pygame.quit()
 
